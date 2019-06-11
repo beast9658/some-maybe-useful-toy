@@ -1,0 +1,88 @@
+<head>
+  <link href="https://vjs.zencdn.net/7.5.4/video-js.css" rel="stylesheet">
+
+  <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+  <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+</head>
+
+<body>
+<div id="playervideo" class="portfolio-slideshow flexslider animate-onscroll">
+    <!-- Video player -->
+                <!--poster is 缩略图-->
+    <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" poster="" data-setup="{}" width="800" height="600"> 
+        <source src="http://video.chinanews.com/flv/2018/06/28/400/98449_web.mp4" type='video/mp4' />
+      </video>
+    <button id="prov">上一个</button>
+    <button id="next">下一个</button>
+    <!-- /Video player -->
+      </div>
+
+      <script src='https://vjs.zencdn.net/7.5.4/video.js'></script>
+  <script>
+    var vList = ['http://video.chinanews.com/flv/gg/170918/1.mp4', 'http://videoclips.chinanews.com/oss/onair/zxw/szuser/9d28c42f4e654ed2baffe606f0b9ef48_37.mp4', 'http://video.chinanews.com/flv/2018/06/29/400/98482_web.mp4']; // 初始化播放列表
+						var vLen = vList.length; // 播放列表的长度
+						var curr = 0; // 当前播放的视频
+            var isAllEnded = false;//所有视频是否都已播放完成（所有视频只播放一次）
+						
+						var player = videojs("example_video_1");
+						
+						player.on("ended",function( ) { //播放完调用
+              if(curr >= vLen-1){
+                  curr = 0
+                }
+                else {
+                  curr++
+                }
+              play()
+            });
+
+            play();
+            $("#prov").on("click",function(){
+                if(curr <= 0){
+                  curr = vLen-1
+                }
+                else {
+                  curr--
+                }
+                play();
+                console.log(curr)
+              })
+            $("#next").on("click",function(){
+                if(curr >= vLen-1){
+                  curr = 0
+                }
+                else {
+                  curr++
+                }
+                play();
+                console.log(curr)
+              })
+						function play(e) {
+              
+              if(isAllEnded){
+                return false;
+              }
+              if(curr == 0){
+                $("#playervideo").addClass("testclass");
+                // $(".testclass .video-js").on("click",function(){
+                //   window.open("http://www.baidu.com");
+                // });
+              }else{
+                $("#playervideo").removeClass("testclass");
+                 $(".video-js").off("click");
+              }
+              
+							player.src(vList[curr]);
+							player.load(vList[curr]); 
+							player.play();
+							// curr++;
+							// if(curr >= vLen){
+							// 	curr = 0; // 播放完了，重新播放
+              //   // isAllEnded = true;
+              // }
+              
+						
+						}
+  </script>
+</body>
